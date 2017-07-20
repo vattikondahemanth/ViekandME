@@ -1,0 +1,5 @@
+XmlDocument sml = new XmlDocument();
+sml.LoadXml(xDoc);
+sml.LoadXml(sml.FirstChild.InnerXml);
+var name = sml.SelectSingleNode("/*").Name;
+xDoc=XDocument.Parse(sml.InnerXml.ToString());
