@@ -1,0 +1,56 @@
+ static class SecureStringExtesnion
+    {
+        public static string GetSTring(this SecureString source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            var length = source.Length;
+            string result = null;
+            char[] chars = new char[length];
+            IntPtr pointer = IntPtr.Zero;
+            try
+            {
+                pointer = Marshal.SecureStringToBSTR(source);
+                Marshal.Copy(pointer, chars, 0, length);
+                result = string.Join(string.Empty, chars);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                if (pointer != IntPtr.Zero)
+                {
+                    Marshal.ZeroFreeBSTR(pointer);
+                }
+
+            }
+            return result;
+        }
+
+    }
+
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+
+            var hushush = "for my eyes only";
+            using (var securstring = new SecureString())
+            {
+                foreach (char item in hushush.ToCharArray())
+                {
+                    securstring.AppendChar(item);
+                }
+                securstring.MakeReadOnly();
+                Console.ReadLine();
+                Console.WriteLine(securstring.ToString());
+                Console.WriteLine(securstring.GetSTring());
+            }
+
+            Console.ReadLine();
