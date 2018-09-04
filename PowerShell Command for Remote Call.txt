@@ -1,0 +1,1 @@
+ Invoke-Command -ComputerName 192.168.26.60 -ScriptBlock { D:\SBIHangFireConsole.exe } -credential sbifm/idealakes
