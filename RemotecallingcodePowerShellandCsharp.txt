@@ -1,0 +1,41 @@
+Install Power Shell in the Remote PC
+Enable Power Shell Remoting to execute Powershell Commnads on the remote server by using the command "Enable-PSRemoting"
+Add the server from which you are making the call as a Trusted one by using the command-
+set-item wsman:\localhost\Client\TrustedHosts -value 172.16.0.0
+
+
+Now use the below code in your project to execute exe on remote server
+
+
+  Runspace runspace = RunspaceFactory.CreateRunspace();
+  runspace.Open();
+  Pipeline pipeline = runspace.CreatePipeline();
+  ps.Commands.AddScript("$User = \"domain\\username\"");
+  ps.Commands.AddScript("$PWord = ConvertTo-SecureString -String \"yourpassword\" - 
+  AsPlainText -Force");
+  ps.Commands.AddScript("$Credential = New-Object -TypeName 
+  System.Management.Automation.PSCredential -ArgumentList $User, $PWord");
+  ps.Commands.AddScript("Invoke-Command -ComputerName REMOTECOMPUTERIP -ScriptBlock { 
+  D:\\TestApp.exe } -cred $Credential");
+
+  Collection<PSObject> resultst = ps.Invoke();
+                Collection<ErrorRecord> errors = ps.Streams.Error.ReadAll();
+                StringBuilder errorDetails = new StringBuilder();
+                if (errors != null && errors.Count > 0)
+                {
+                    foreach (ErrorRecord er in errors)
+                    {
+                        errorDetails.AppendLine(er.Exception.ToString());
+
+                    }
+                    throw new Exception(errorDetails.ToString());
+                }
+
+                Console.WriteLine(errorDetails.ToString());
+                StringBuilder stringBuilder = new StringBuilder();
+                foreach (PSObject obj in resultst)
+                {
+                    stringBuilder.AppendLine(obj.ToString());
+                }`enter code here`
+                Console.WriteLine(stringBuilder.ToString());
+                runspace.Close();
