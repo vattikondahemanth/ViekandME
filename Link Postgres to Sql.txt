@@ -1,0 +1,43 @@
+EXEC MASTER.dbo.sp_MSset_oledb_prop N'PGNP' ,N'AllowInProcess',1
+GO
+EXEC MASTER.dbo.sp_MSset_oledb_prop N'PGNP' ,N'DynamicParameters',1
+GO
+DECLARE @name NVARCHAR(4000);
+DECLARE @provider NVARCHAR(4000);
+DECLARE @servername NVARCHAR(4000);
+DECLARE @port NVARCHAR(4000);
+DECLARE @db_name NVARCHAR(4000)
+
+SET @name = N'ASS_PG';
+SET @provider = N'PGNP';
+SET @servername = N'172.31.94.85';
+SET @port = 'PORT=5432;'
+SET @db_name = N'ass';
+
+EXEC MASTER.dbo.sp_addlinkedserver @server = @name
+,@srvproduct = N'PGNP'
+,@provider = N'PGNP'
+,@datasrc = @servername
+,@provstr = @port
+,@catalog = @db_name
+
+EXEC MASTER.dbo.sp_addlinkedsrvlogin @rmtsrvname = @name
+,@useself = N'False'
+,@locallogin = NULL
+,@rmtuser = N'postgres'
+,@rmtpassword = '8P0L15J'
+
+EXEC MASTER.dbo.sp_serveroption @server = @name
+,@optname = 'data access'
+,@optvalue = 'true'
+EXEC MASTER.dbo.sp_serveroption @server = @name
+,@optname = 'use remote collation'
+,@optvalue = 'true'
+EXEC MASTER.dbo.sp_serveroption @server = @name
+,@optname = 'rpc'
+,@optvalue = 'true'
+EXEC MASTER.dbo.sp_serveroption @server = @name
+,@optname = 'rpc out'
+,@optvalue = 'true'
+GO
+
