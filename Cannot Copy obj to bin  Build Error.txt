@@ -1,0 +1,10 @@
+Go to Project Properties and in the Build Events paste the following lines in the Pre-build event command line
+
+
+
+====================================== lines to paste =================================
+
+
+if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+
+if exist "$(TargetPath)" if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"
