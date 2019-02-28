@@ -1,0 +1,23 @@
+[user]
+	email = hemanth.hemanth180@gmail.com
+	name = vattikondahemanth
+# [diff]
+# 	tool = meld
+# [difftool "meld"]
+# 	path = C:/Program Files (x86)/Meld/meld/Meld.exe
+# [difftool]
+# 	prompt = false
+	
+	
+ [merge]
+	tool = vsdiffmerge
+ [mergetool "vsdiffmerge"]
+	cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\TeamFoundation\\Team Explorer\\vsdiffmerge.exe\" \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\" //m
+    trustexistcode = true
+ [mergetool]
+ 	keepBackup =false
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
