@@ -1,0 +1,49 @@
+USE [master]
+GO
+
+/****** Object:  LinkedServer [PRODREPLICA]    Script Date: 2019-03-01 07:37:14 PM ******/
+EXEC master.dbo.sp_addlinkedserver @server = N'PRODREPLICA', @srvproduct=N'PostgreSQL35W', @provider=N'MSDASQL', @datasrc=N'PostgreSQL35W'
+ /* For security reasons the linked server remote logins password is changed with ######## */
+EXEC master.dbo.sp_addlinkedsrvlogin @rmtsrvname=N'PRODREPLICA',@useself=N'False',@locallogin=NULL,@rmtuser=N'postgres',@rmtpassword='admin'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'collation compatible', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'data access', @optvalue=N'true'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'dist', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'pub', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'rpc', @optvalue=N'true'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'rpc out', @optvalue=N'true'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'sub', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'connect timeout', @optvalue=N'0'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'collation name', @optvalue=null
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'lazy schema validation', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'query timeout', @optvalue=N'0'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'use remote collation', @optvalue=N'true'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'PRODREPLICA', @optname=N'remote proc transaction promotion', @optvalue=N'true'
+GO
+
+
